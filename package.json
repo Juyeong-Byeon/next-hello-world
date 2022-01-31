@@ -1,5 +1,5 @@
 {
-  "name": "next-js-hellow-world",
+  "name": "next-js-hello-world",
   "private": true,
   "scripts": {
     "dev": "next dev",
