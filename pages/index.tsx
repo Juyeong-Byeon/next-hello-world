@@ -1,17 +1,34 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import SEO from "../components/SEO";
 import { Movie } from "../model/types";
 
 export default function Home({ results: movies }: { results: Movie[] }) {
   // const [movies, setMovies] = useState<Movie[]>();
 
+  const router = useRouter();
+  const onClick = (movie: Movie) => {
+    // router.push(`/movies/${movieId}`);
+    router.push(
+      `/movies/${movie.title}/${movie.id}`
+      // { path masking
+      // pathname: `/movies/${movie.title}/${movie.id}`,
+      //   query: {
+      //     title: movie.original_title,
+      //   },
+      // },
+      // `/movies/${movie.id}`
+    );
+  };
+
   return (
-    <div>
+    <>
       <SEO title="Home" />
       <div className="container">
         {movies?.map((movie) => (
-          <div className="movie" key={movie.id}>
+          <div key={movie.id} onClick={() => onClick(movie)} className="movie">
             <img
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
             />
             <h4>{movie.original_title}</h4>
@@ -25,6 +42,7 @@ export default function Home({ results: movies }: { results: Movie[] }) {
           grid-template-columns: 1fr 1fr;
           padding: 20px;
           gap: 20px;
+          cursor: pointer;
         }
         .movie img {
           border-radius: 12px;
@@ -40,7 +58,7 @@ export default function Home({ results: movies }: { results: Movie[] }) {
           text-align: center;
         }
       `}</style>
-    </div>
+    </>
   );
 }
 
